@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+
+    "name": "HorribleSubs RSS",
+    "description": "This extension allows the user use HorribleSubs' RSS feed",
+    "homepage_url": "https://github.com/hueyjj/HorribleSubsRSS",
+    "version": "1.0",
+
+    "icons": {
+        "50": "icon.png"
+    },
+
+    "browser_action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+    },
+
+    "permissions": [
+      "activeTab",
+      "storage",
+      "http://horriblesubs.info/*",
+      "https://horriblesubs.info/*"
+    ],
+
+    "background": {
+        "scripts": ["./lib/jquery-3.2.1.min.js"]
+    }
+}
