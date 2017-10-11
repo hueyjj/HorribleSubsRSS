@@ -16,12 +16,29 @@ function loadRSS(url) {
 
         let table = convertToTable(rss);
         load(table);
+
+        chrome.storage.sync.set({"RSSDOM": table}, function() {
+            console.log("RSS DOM object saved");
+        });
+        chrome.storage.sync.get("RSSDOM", function(item) {
+            if (!chrome.runtime.error) {
+                console.log(item);
+            }
+            else {
+                console.log(chrome.runtime.lastError.message);
+            }
+        });
     });
 }
 
 //TODO Simply list down with same names and put magnet links in the same row
 function convertToTable(rss) {
     if (rss.length > 0) {
+        rss.sort(function(a, b){
+            let stringA = a["title"].toLowerCase(), stringB = b["title"].toLowerCase();
+            return (stringA < stringB) ? -1:
+                   (stringA > stringB) ?  1: 0; 
+        });
         let table = document.createElement("table");
         table.className = "rss-table";
 
@@ -40,7 +57,9 @@ function convertToTable(rss) {
             magnetSpan.className = "rss-link";
             magnetRefLink.title = "Magnet Link";
             magnetRefLink.href = item["link"];
-            magnetRefLink.innerText = "1080p";
+            magnetRefLink.innerText = item["title"].includes("1080p")   ? "1080p" :
+                                      item["title"].includes("720p")    ? "720p" :
+                                      item["title"].includes("480p")    ? "480p" : "???p";
             magnetSpan.appendChild(magnetRefLink);
 
             magnetSpan.onclick = function () { chrome.tabs.create({url: item["link"], selected: false}) };
