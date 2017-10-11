@@ -26,23 +26,27 @@ function convertToTable(rss) {
         table.className = "rss-table";
 
         rss.forEach(function(item) {
-            let row = document.createElement("tr");
+            let row = table.insertRow(-1);
             row.className = "rss-row";
-            row.insertCell(-1);
-            row.insertCell(-1);
 
+            let titleCell = row.insertCell(-1),
+                magnetCell = row.insertCell(-1);
 
-            let title = document.createTextNode(rss.title);
+            let title = document.createTextNode(item["title"]);
             title.className = "rss-title";
 
-            let magnet = document.createTextNode(rss.link);
-            magnet.className = "rss-magnet";
+            let magnetSpan = document.createElement("span"),
+                magnetRefLink = document.createElement("a");
+            magnetSpan.className = "rss-link";
+            magnetRefLink.title = "Magnet Link";
+            magnetRefLink.href = item["link"];
+            magnetRefLink.innerText = "1080p";
+            magnetSpan.appendChild(magnetRefLink);
 
-            row.appendChild(title);
-            row.appendChild(magnet);
-            
-            table.insertRow(-1);
-            table.appendChild(row);
+            magnetSpan.onclick = function () { chrome.tabs.create({url: item["link"], selected: false}) };
+
+            titleCell.appendChild(title);
+            magnetCell.appendChild(magnetSpan);
         });
         return table;
     }
@@ -56,8 +60,11 @@ function load(table) {
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
+    // Close tab when after magnet link has opened
+    chrome.tabs.onCreated.addListener(function(tab) {
+        chrome.tabs.remove(tab.id);
+    });
     const url = "http://horriblesubs.info/rss.php?res=all";
     loadRSS(url);
 });
