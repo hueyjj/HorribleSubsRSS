@@ -1,3 +1,46 @@
+//function save(rss) {
+//    if (rss.length < 1) return;
+//
+//    // Save number of items
+//    chrome.storage.sync.set({"numItems": rss.length}, function() {
+//        console.log(rss.length + " items saved");
+//    });
+//
+//    // Save each item
+//    rss.forEach(function(item, i) {
+//        let key = "item" + ' ' + i;
+//        chrome.storage.sync.set({[key]: item}, function() {
+//            //console.log(key + ' ' + "saved");
+//        });
+//    });
+//}
+//
+//function get() {
+//    let items = null;
+//    chrome.storage.sync.get("numItems", function(item) {
+//        if (item) items = item.numItems;
+//    });
+//
+//    console.log("number of items " + items);
+//    if (items && items > 0) {
+//        let rss = [];
+//        for (let i = 0; i < items; ++i) {
+//            let key = "item" + ' ' + i;
+//            chrome.storage.sync.get(key, function(item) {
+//                if (!chrome.runtime.error) {
+//                    console.log(item);
+//                    rss.push(item);
+//                }
+//                else {
+//                    console.log(chrome.runtime.lastError.message);
+//                }
+//            });
+//        }
+//    }
+//
+//    return (items) ? rss : null;
+//}
+
 function loadRSS(url) {
     $.get(url, function(data) { 
         let rss = [];
@@ -14,20 +57,17 @@ function loadRSS(url) {
             rss.push(item);
         });
 
+        //chrome.storage.sync.clear(() => {
+        //    if (!chrome.runtime.error) {
+        //        console.log("successfully cleared storage");
+        //    }
+        //    else {
+        //        console.log(chrome.runtime.lastError.message);
+        //    }
+        //});
+
         let table = convertToTable(rss);
         load(table);
-
-        chrome.storage.sync.set({"RSSDOM": table}, function() {
-            console.log("RSS DOM object saved");
-        });
-        chrome.storage.sync.get("RSSDOM", function(item) {
-            if (!chrome.runtime.error) {
-                console.log(item);
-            }
-            else {
-                console.log(chrome.runtime.lastError.message);
-            }
-        });
     });
 }
 

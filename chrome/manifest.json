@@ -2,7 +2,7 @@
     "manifest_version": 2,
 
     "name": "HorribleSubs RSS",
-    "description": "This extension allows the user use HorribleSubs' RSS feed",
+    "description": "This extension retrieves HorribleSubs' RSS feed",
     "homepage_url": "https://github.com/hueyjj/HorribleSubsRSS",
     "version": "1.0",
 
