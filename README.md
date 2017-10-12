@@ -32,7 +32,7 @@ Usage
 ======
 
 Click on the new icon that shows up. If the plugin is able to retrieve HorribleSubs' RSS feed, then
-a list of titles along with its magnet link should show up.
+a list of titles and magnet links should show up.
 
 Click on a magnet link to open and download with the usual application that handles magnet links.
 
