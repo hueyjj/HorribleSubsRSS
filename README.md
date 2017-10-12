@@ -5,7 +5,7 @@ HorribleSubs RSS is a web browser plugin that retrives the RSS feed from Horribl
 mainly serve as a plugin to check what has been updated and conveniently download using the RSS feed's
 provided magnet links.
 
-![Markers screenshot](https://raw.githubusercontent.com/hueyjj/HorribleSubsRSS/master/Screenshots/example.PNG)
+![Markers screenshot](https://raw.githubusercontent.com/hueyjj/HorribleSubsRSS/master/Screenshots/Example.png)
 
 Install (Chrome)
 ======
